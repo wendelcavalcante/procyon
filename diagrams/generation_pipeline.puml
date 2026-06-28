@@ -1,0 +1,57 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+
+title Macro View - Adaptive Game Level Design Generation
+
+package "Game Environment" {
+  [Game Runtime] as Runtime
+  [Player / Simulated Player] as Player
+}
+
+package "Adaptation Core" {
+  [Telemetry Collector] as Telemetry
+  [Player Model] as Model
+  [Design Goals Manager] as Goals
+  [Adaptation Engine] as Engine
+}
+
+package "Generative Core" {
+  [Pipeline Builder] as Builder
+  [Component Registry] as Registry
+  [Configured Generation Pipeline] as Pipeline
+}
+
+package "Validation and Output" {
+  [Validation Engine] as Validation
+  [Adapted Level Design] as Level
+  [Experiment Logger] as Logger
+}
+
+Player --> Runtime
+Runtime --> Telemetry
+Telemetry --> Model
+Model --> Engine
+Goals --> Engine
+
+Engine --> Builder
+Registry --> Builder
+Builder --> Pipeline
+Pipeline --> Validation
+Validation --> Level
+Level --> Runtime
+
+Telemetry --> Logger
+Engine --> Logger
+Pipeline --> Logger
+Validation --> Logger
+
+note right of Pipeline
+Pipeline assembled according to:
+- adaptive dimension
+- game genre
+- generation strategy
+- available algorithms
+end note
+
+@enduml
