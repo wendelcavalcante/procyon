@@ -38,6 +38,10 @@ src/procyon/generation/pipeline.py
 src/procyon/generation/registry.py
 src/procyon/generation/stages.py
 src/procyon/generation/strategies.py
+src/procyon/integration/__init__.py
+src/procyon/integration/adapter.py
+src/procyon/integration/ports.py
+src/procyon/integration/unity/adapter.py
 src/procyon/player_modeling/__init__.py
 src/procyon/player_modeling/models.py
 src/procyon/plugins/__init__.py

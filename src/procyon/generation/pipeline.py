@@ -1,30 +1,42 @@
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
+from typing import Self
 
 from procyon.core.artifacts import AdaptationRequest, GenerationResult
 from procyon.generation.context import GenerationContext
 
 
-class PipelineStage:
+class PipelineStage(ABC):
+    """A single stage in a composable generation pipeline."""
+
+    @abstractmethod
     def process(self, context: GenerationContext) -> GenerationContext:
-        raise NotImplementedError
+        """Process and return the generation context."""
 
 
 @dataclass(slots=True)
 class GenerationPipeline:
+    """
+    Sequence of stages assembled according to the selected strategy.
+
+    A pipeline may or may not select a final candidate. This supports both
+    runtime usage and experimental analysis.
+    """
+
     stages: list[PipelineStage] = field(default_factory=list)
 
-    def add_stage(self, stage: PipelineStage) -> GenerationPipeline:
+    def then(self, stage: PipelineStage) -> Self:
         self.stages.append(stage)
         return self
 
-    def add_stages(self, stages: list[PipelineStage]) -> GenerationPipeline:
+    def add_stage(self, stage: PipelineStage) -> Self:
+        return self.then(stage)
+
+    def add_stages(self, stages: list[PipelineStage]) -> Self:
         self.stages.extend(stages)
         return self
-
-    def then(self, stage: PipelineStage) -> GenerationPipeline:
-        return self.add_stage(stage)
 
     def run(self, request: AdaptationRequest) -> GenerationResult:
         context = GenerationContext(request=request)
@@ -32,16 +44,8 @@ class GenerationPipeline:
         for stage in self.stages:
             context = stage.process(context)
 
-        if context.selected is None:
-            raise RuntimeError("Pipeline finished without selecting a level artifact.")
-
-        selected_index = context.candidates.index(context.selected)
-        validation = context.validation_reports.get(selected_index)
-        difficulty = context.difficulty_reports.get(selected_index)
-
         return GenerationResult(
-            level=context.selected,
-            validation=validation,
-            difficulty=difficulty,
+            candidates=context.candidates,
+            selected=context.selected,
             metadata=context.metadata,
         )
