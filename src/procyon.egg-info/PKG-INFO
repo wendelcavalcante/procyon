@@ -9,6 +9,9 @@ Requires-Dist: pandas>=2.2
 Requires-Dist: pydantic>=2.7
 Requires-Dist: matplotlib>=3.8
 Requires-Dist: tqdm>=4.66
+Provides-Extra: api
+Requires-Dist: fastapi>=0.110; extra == "api"
+Requires-Dist: uvicorn[standard]>=0.27; extra == "api"
 Provides-Extra: ml
 Requires-Dist: scikit-learn>=1.5; extra == "ml"
 Provides-Extra: llm
