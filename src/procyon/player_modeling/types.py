@@ -12,9 +12,14 @@ class PlayerModelState:
 
     This object is intentionally serializable, so it can be sent back to a
     stateless API client and provided again in a future request.
+
+    skill represents the current estimated ability.
+    uncertainty represents how uncertain the model still is about this estimate.
     """
 
     skill: float = 0.50
+    uncertainty: float = 0.50
+
     engagement: float = 0.50
     frustration: float = 0.00
     confidence: float = 0.10

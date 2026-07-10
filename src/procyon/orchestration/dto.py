@@ -41,6 +41,8 @@ class TelemetrySummaryDTO(BaseModel):
 
 class PlayerModelStateDTO(BaseModel):
     skill: float = 0.50
+    uncertainty: float = 0.50
+
     engagement: float = 0.50
     frustration: float = 0.00
     confidence: float = 0.10
@@ -81,23 +83,13 @@ class GenerationConfigDTO(BaseModel):
 
 
 class AdaptiveGenerationRequestDTO(BaseModel):
-    """
-    DTO received by the Orchestration Layer.
-
-    This object is transport-friendly and can be created from:
-    - FastAPI request body;
-    - file-based JSON exchange;
-    - simulation code;
-    - CLI input.
-    """
-
     session_id: str | None = None
     player_id: str | None = None
 
     runtime: RuntimeContextDTO = Field(default_factory=RuntimeContextDTO)
 
     telemetry: TelemetrySummaryDTO | None = None
-    last_player_state: PlayerModelStateDTO = Field(default_factory=PlayerModelStateDTO)
+    last_player_state: PlayerModelStateDTO | None = None
     design_goals: DesignGoalsDTO = Field(default_factory=DesignGoalsDTO)
     generation: GenerationConfigDTO
 

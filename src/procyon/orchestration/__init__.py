@@ -14,6 +14,7 @@ from procyon.orchestration.dto import (
 from procyon.orchestration.orchestrator import (
     AdaptiveGenerationOrchestrator,
     create_default_orchestrator,
+    create_sqlite_orchestrator,
 )
 
 __all__ = [
@@ -30,4 +31,5 @@ __all__ = [
     "TelemetrySummaryDTO",
     "AdaptiveGenerationOrchestrator",
     "create_default_orchestrator",
+    "create_sqlite_orchestrator",
 ]

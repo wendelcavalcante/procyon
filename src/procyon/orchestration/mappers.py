@@ -55,6 +55,7 @@ def telemetry_from_dto(dto: TelemetrySummaryDTO | None) -> TelemetrySummary | No
 def player_state_from_dto(dto: PlayerModelStateDTO) -> PlayerModelState:
     return PlayerModelState(
         skill=dto.skill,
+        uncertainty=dto.uncertainty,
         engagement=dto.engagement,
         frustration=dto.frustration,
         confidence=dto.confidence,
@@ -68,6 +69,7 @@ def player_state_from_dto(dto: PlayerModelStateDTO) -> PlayerModelState:
 def player_state_to_dto(state: PlayerModelState) -> PlayerModelStateDTO:
     return PlayerModelStateDTO(
         skill=state.skill,
+        uncertainty=state.uncertainty,
         engagement=state.engagement,
         frustration=state.frustration,
         confidence=state.confidence,

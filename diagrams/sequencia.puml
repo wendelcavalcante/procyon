@@ -1,0 +1,52 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+skinparam sequence {
+  ArrowColor #444444
+  LifeLineBorderColor #444444
+  LifeLineBackgroundColor #F8F9F9
+  ParticipantBorderColor #444444
+  ParticipantFontColor #222222
+  ActorBorderColor #444444
+  ActorBackgroundColor #FFFFFF
+  ActorFontColor #222222
+}
+
+actor "Game Runtime /\nSimulation" as Runtime #FFFFFF
+
+participant "Integration Layer" as Integration #D6EAF8
+participant "Orchestration Layer" as Orchestrator #D5F5E3
+participant "Adaptation Core" as Adaptation #FCF3CF
+participant "Generation Core" as Generation #FADBD8
+participant "Plugins" as Plugins #E8DAEF
+
+Runtime -> Integration : Request next level\ntelemetry + last player state
+Integration -> Orchestrator : Forward request DTO
+
+activate Orchestrator #D5F5E3
+
+Orchestrator -> Adaptation : Update player model\nand decide adaptation
+activate Adaptation #FCF3CF
+
+Adaptation --> Orchestrator : AdaptationRequest
+deactivate Adaptation
+
+Orchestrator -> Generation : Build and run pipeline
+activate Generation #FADBD8
+
+Generation -> Plugins : Generate, validate\nand assess candidates
+activate Plugins #E8DAEF
+
+Plugins --> Generation : Candidate results
+deactivate Plugins
+
+Generation --> Orchestrator : GenerationResult
+deactivate Generation
+
+Orchestrator -> Integration : Build response DTO
+deactivate Orchestrator
+
+Integration --> Runtime : Return next level\nupdated player state\nadaptation metadata
+
+@enduml

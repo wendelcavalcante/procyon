@@ -1,0 +1,33 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+skinparam rectangle {
+  BorderColor #444444
+  FontColor #222222
+  RoundCorner 12
+}
+
+title Sudoku Generation Pipeline Example
+
+package "Generation Pipeline" #FADBD8 {
+  rectangle "GenerateCandidatesStage\nRandomBacktrackingSudokuGenerator" as Gen #FDEDEC
+  rectangle "RemoveSudokuCluesStage\nstrategy=symmetric\ntarget_clues=32" as Remove #FDEDEC
+  rectangle "ValidateCandidatesStage\nSudokuUniqueSolutionValidator" as Validate #FDEDEC
+  rectangle "AssessDifficultyStage\nSudokuSearchDifficultyAssessor" as Assess #FDEDEC
+  rectangle "SelectClosestDifficultyCandidateStage" as Select #FDEDEC
+}
+
+rectangle "AdaptationRequest\n(target difficulty)" as Request #D5F5E3
+rectangle "GenerationResult\n(selected level + candidates)" as Result #D6EAF8
+
+Request --> Gen
+Gen --> Remove
+Remove --> Validate
+Validate --> Assess
+Assess --> Select
+Select --> Result
+
+@enduml

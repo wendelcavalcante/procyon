@@ -1,0 +1,55 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+skinparam package {
+  BorderColor #444444
+  FontColor #222222
+}
+
+skinparam rectangle {
+  BorderColor #444444
+  FontColor #222222
+  RoundCorner 12
+}
+
+package "Integration Layer" #D6EAF8 {
+  rectangle "Runtime Adapter" as RuntimeAdapter #EBF5FB
+}
+
+package "Orchestration Layer" #D5F5E3 {
+  rectangle "Adaptive Generation\nOrchestrator" as Orchestrator #EAFAF1
+}
+
+package "Adaptation Core" #FCF3CF {
+  rectangle "Telemetry Collector" as Telemetry #FEF9E7
+  rectangle "Player Model" as PlayerModel #FEF9E7
+  rectangle "Design Goals Manager" as Goals #FEF9E7
+  rectangle "Adaptation Engine" as Engine #FEF9E7
+}
+
+package "Generation Core" #FADBD8 {
+  rectangle "Pipeline Builder" as Builder #FDEDEC
+  rectangle "Generation Pipeline" as Pipeline #FDEDEC
+}
+
+package "Plugins" #E8DAEF {
+  rectangle "Puzzle / Game\nGenerators" as Generators #F5EEF8
+  rectangle "Validators /\nAssessors" as Evaluators #F5EEF8
+}
+
+RuntimeAdapter --> Orchestrator
+
+Orchestrator --> Telemetry
+Orchestrator --> PlayerModel
+Orchestrator --> Goals
+Orchestrator --> Engine
+Orchestrator --> Builder
+
+Builder --> Pipeline
+Pipeline --> Generators
+Pipeline --> Evaluators
+
+@enduml

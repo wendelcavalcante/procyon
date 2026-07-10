@@ -109,9 +109,9 @@ def main() -> None:
         if candidate.difficulty is not None
     ]
 
-    # print(difficulties)
+    print(difficulties)
 
-    # plot_active_difficulty_histogram(result, bins=100)
+    plot_active_difficulty_histogram(result, bins=100)
 
     # pipeline = (
     #     GenerationPipeline()

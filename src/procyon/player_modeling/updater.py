@@ -4,6 +4,7 @@ from dataclasses import dataclass
 
 from procyon.player_modeling.types import PerformanceObservation, PlayerModelState
 from procyon.telemetry.types import TelemetrySummary
+from procyon.player_modeling.updaters import PlayerModelUpdater
 
 
 def _clamp(value: float, minimum: float = 0.0, maximum: float = 1.0) -> float:
@@ -11,7 +12,7 @@ def _clamp(value: float, minimum: float = 0.0, maximum: float = 1.0) -> float:
 
 
 @dataclass(slots=True)
-class SimplePlayerModelUpdater:
+class SimplePlayerModelUpdater(PlayerModelUpdater):
     """
     Initial player model updater.
 

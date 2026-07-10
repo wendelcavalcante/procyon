@@ -1,19 +1,15 @@
 from __future__ import annotations
 
+import os
 from functools import lru_cache
 
 from procyon.orchestration import (
     AdaptiveGenerationOrchestrator,
-    create_default_orchestrator,
+    create_sqlite_orchestrator,
 )
 
 
 @lru_cache(maxsize=1)
 def get_orchestrator() -> AdaptiveGenerationOrchestrator:
-    """
-    Provides the default orchestrator instance for the FastAPI adapter.
-
-    The orchestrator itself should not store player/session state. Player state
-    is expected to be received in the request and returned in the response.
-    """
-    return create_default_orchestrator()
+    database_path = os.getenv("PROCYON_SQLITE_PATH", "procyon.sqlite3")
+    return create_sqlite_orchestrator(database_path)

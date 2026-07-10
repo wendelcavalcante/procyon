@@ -49,7 +49,13 @@ class SimpleAdaptationEngine:
             design_goals.target_experience
         )
 
-        raw_target = player_state.skill + challenge_offset
+        confidence = player_state.confidence
+
+        # When confidence is low, the challenge offset is reduced.
+        # This makes early adaptation more conservative.
+        effective_offset = challenge_offset * confidence
+
+        raw_target = player_state.skill + effective_offset
 
         applied_constraints: list[str] = []
 
@@ -78,7 +84,10 @@ class SimpleAdaptationEngine:
             metadata={
                 "source": self.__class__.__name__,
                 "player_skill": player_state.skill,
+                "player_confidence": player_state.confidence,
+                "player_uncertainty": player_state.uncertainty,
                 "challenge_offset": challenge_offset,
+                "effective_challenge_offset": effective_offset,
             },
         )
 
