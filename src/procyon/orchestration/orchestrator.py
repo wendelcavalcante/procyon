@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from procyon.adaptation.engine import SimpleAdaptationEngine
+from procyon.adaptation.engine import AdaptationEngine, SimpleAdaptationEngine
 from procyon.orchestration.dto import (
     AdaptationDecisionDTO,
     AdaptiveGenerationRequestDTO,
@@ -17,7 +17,7 @@ from procyon.orchestration.mappers import (
     strategy_from_string,
     telemetry_from_dto,
 )
-from procyon.orchestration.pipeline_builder import DefaultPipelineBuilder
+from procyon.orchestration.pipeline_builder import GenerationPipelineBuilder, DefaultGenerationPipelineBuilder
 from procyon.player_modeling.probabilistic import ProbabilisticPlayerModelUpdater
 from procyon.player_modeling.updaters import PlayerModelUpdater
 from procyon.persistence.unit_of_work import PersistenceStore
@@ -38,8 +38,8 @@ from procyon.player_modeling.types import PlayerModelState
 @dataclass(slots=True)
 class AdaptiveGenerationOrchestrator:
     player_model_updater: PlayerModelUpdater
-    adaptation_engine: SimpleAdaptationEngine
-    pipeline_builder: DefaultPipelineBuilder
+    adaptation_engine: AdaptationEngine
+    pipeline_builder: GenerationPipelineBuilder
     persistence_store: PersistenceStore | None = None
 
     def _resolve_previous_player_state(
@@ -185,15 +185,17 @@ def create_default_orchestrator() -> AdaptiveGenerationOrchestrator:
     return AdaptiveGenerationOrchestrator(
         player_model_updater=ProbabilisticPlayerModelUpdater(),
         adaptation_engine=SimpleAdaptationEngine(),
-        pipeline_builder=DefaultPipelineBuilder(),
+        pipeline_builder=DefaultGenerationPipelineBuilder(),
     )
 
 def create_sqlite_orchestrator(
-    database_path: str | Path = "procyon.sqlite3",
+    database_path: str | Path = "procyon.sqlite3", 
+    pipeline_builder: GenerationPipelineBuilder = DefaultGenerationPipelineBuilder()
 ) -> AdaptiveGenerationOrchestrator:
     factory = SQLiteConnectionFactory(database_path)
+    print(database_path)
+    print(pipeline_builder)
     initialize_sqlite_database(factory)
-
     store = PersistenceStore(
         player_states=SQLitePlayerStateRepository(factory),
         telemetry=SQLiteTelemetryRepository(factory),
@@ -204,6 +206,6 @@ def create_sqlite_orchestrator(
     return AdaptiveGenerationOrchestrator(
         player_model_updater=ProbabilisticPlayerModelUpdater(),
         adaptation_engine=SimpleAdaptationEngine(),
-        pipeline_builder=DefaultPipelineBuilder(),
+        pipeline_builder=pipeline_builder,
         persistence_store=store,
     )

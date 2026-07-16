@@ -2,3 +2,4 @@ runtime
 .venv
 .pytest_cache
 *.pyc
+*.sqlite3

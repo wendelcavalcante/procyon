@@ -2,10 +2,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from abc import ABC, abstractmethod
 from procyon.core.artifacts import AdaptationRequest
 from procyon.core.types import GenerationStrategyType
 from procyon.generation.pipeline import GenerationPipeline
+from procyon.orchestration.pipeline_builder import GenerationPipelineBuilder
+
 from procyon.generation.stages import (
     AssessDifficultyStage,
     GenerateCandidatesStage,
@@ -13,12 +14,8 @@ from procyon.generation.stages import (
     ValidateCandidatesStage,
 )
 
-class GenerationPipelineBuilder(ABC):
-    @abstractmethod
-    def build(self, request: AdaptationRequest) -> GenerationPipelineBuilder: ...
-
 @dataclass(slots=True)
-class DefaultGenerationPipelineBuilder(GenerationPipelineBuilder):
+class ExampleGenerationPipelineBuilder(GenerationPipelineBuilder):
     """
     Builds generation pipelines from an AdaptationRequest.
 
@@ -49,7 +46,7 @@ class DefaultGenerationPipelineBuilder(GenerationPipelineBuilder):
             FisherYatesFifteenGenerator,
             ReverseShuffleFifteenGenerator,
         )
-
+        print("------------example---------------")
         parameters = request.target_parameters
         candidate_count = int(parameters.get("candidate_count", 50))
         seed = parameters.get("seed")

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
+
 from dataclasses import dataclass
 
 from procyon.adaptation.types import AdaptationDecision
@@ -13,8 +15,20 @@ def _clamp(value: float, minimum: float = 0.0, maximum: float = 1.0) -> float:
     return max(minimum, min(maximum, value))
 
 
+@dataclass
+class AdaptationEngine(ABC):
+    @abstractmethod
+    def decide(
+            self,
+            player_state: PlayerModelState,
+            design_goals: DesignGoals,
+            domain: str,
+            strategy_type: GenerationStrategyType | None,
+            generation_parameters: dict,
+        ) -> AdaptationDecision: ...
+
 @dataclass(slots=True)
-class SimpleAdaptationEngine:
+class SimpleAdaptationEngine(AdaptationEngine):
     """
     Initial adaptation engine.
 
