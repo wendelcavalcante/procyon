@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+
+title: "Procyon: An Architecture for Adaptive Game Level Generation"
+type: software
+
+authors:
+  - family-names: "Cavalcante"
+    given-names: "Wendel"
+
+version: "1.0.0"
+
+date-released: "2026-07-12"
+
+repository-code: "https://github.com/wendelcavalcante/procyon"
+
+url: "https://github.com/wendelcavalcante/procyon"
+
+license: "MIT"
+
+keywords:
+  - procedural content generation
+  - adaptive content generation
+  - game level generation
+  - player modeling
+  - dynamic difficulty adjustment
+  - game software architecture
+  - procedural content generation via machine learning
+  - digital games
+  - serious games
+
+abstract: >
+  Procyon is a modular software architecture for adaptive game level
+  generation. It separates integration, orchestration, adaptation,
+  persistence, generation, and domain-specific concerns, enabling
+  heterogeneous generation algorithms and adaptive dimensions to be
+  combined through reusable generation pipelines. The reference
+  implementation includes case studies for Fifteen Puzzle, Sudoku,
+  and Sokoban, as well as mechanisms for player telemetry, player
+  modeling, and adaptive difficulty adjustment.
