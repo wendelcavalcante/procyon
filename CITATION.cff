@@ -30,9 +30,5 @@ keywords:
   - serious games
 
 abstract: >
-Procyon is a reference implementation of a modular architecture for adaptive game level generation. 
-It provides reusable components for runtime integration, orchestration, player telemetry and modeling, adaptation, persistence,
-and procedural level generation. Generation workflows are composed as configurable pipelines, 
-allowing different generation algorithms, validation strategies, difficulty assessment methods, and 
-selection mechanisms to be combined and extended. The repository includes implementations for Fifteen Puzzle, 
-Sudoku, and Sokoban, demonstrating how the architecture can support heterogeneous game domains and adaptive generation strategies.
+  Procyon is a reference implementation of a modular architecture for adaptive game level generation. It provides reusable components for runtime integration, orchestration, player telemetry and modeling, adaptation, persistence, and procedural level generation. Generation workflows are composed as configurable pipelines, allowing different generation algorithms, validation strategies, difficulty assessment methods, and selection mechanisms to be combined and extended. The repository includes implementations for Fifteen Puzzle, Sudoku, and Sokoban, demonstrating how the architecture can support heterogeneous game domains and adaptive generation strategies.
+
