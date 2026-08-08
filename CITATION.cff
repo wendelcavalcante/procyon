@@ -21,7 +21,7 @@ license: "MIT"
 keywords:
   - procedural content generation
   - adaptive content generation
-  - game level generation
+  - puzzle level generation
   - player modeling
   - dynamic difficulty adjustment
   - game software architecture
