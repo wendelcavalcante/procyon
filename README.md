@@ -11,7 +11,11 @@ The current prototype focuses on adaptive difficulty for puzzle games and includ
 The implementation is intended as a research prototype and coding framework. It does not aim to provide state-of-the-art implementations for every component. Instead, it provides lightweight but complete implementations that demonstrate how adaptive generation workflows can be composed, executed, persisted, and extended.
 
 ---
+## Accepted Paper
 
+The camera-ready version of the accepted paper is available [here](https://github.com/wendelcavalcante/procyon/tree/main/paper/accepted-paper.pdf).
+
+---
 ## Main Features
 
 * Layered architecture for adaptive level generation
@@ -111,7 +115,67 @@ src/procyon/
 ```
 
 ---
+## Requirements
 
+The prototype is implemented in Python and was designed to run locally for research and experimentation purposes.
+
+### Software Requirements
+
+- Python 3.11 or higher
+- `pip`
+- A virtual environment tool, such as `venv`
+- SQLite 3, available through Python's standard `sqlite3` module
+- Git, for cloning the repository and managing releases
+
+Optional requirements:
+
+- FastAPI and Uvicorn, required only when running the HTTP adapter
+- Matplotlib, required only for optional plotting or difficulty-distribution examples
+- Pytest, required only for running the test suite
+
+The required Python packages are listed in `requirements.txt`. To install them, run:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Hardware Requirements
+
+The prototype does not require specialized hardware. It can be executed on a standard personal computer or laptop.
+
+Recommended hardware:
+
+- Dual-core CPU or higher
+- 4 GB RAM or more
+- At least 100 MB of free disk space for the source code, examples, and local SQLite databases
+
+Generation time depends on the selected puzzle domain, generation strategy, candidate count, and difficulty assessment method. Larger candidate counts or more expensive validation and assessment stages may increase execution time.
+
+### Operating System
+
+The prototype should run on any operating system supported by Python 3.11 or higher, including:
+
+- Linux
+- macOS
+- Windows
+
+The prototype was primarily developed and tested in a Linux environment.
+
+### External Services
+
+No external service is required to run the core prototype. The default persistence adapter uses a local SQLite database file, which is created automatically when running the stateful examples.
+
+### Docker and Virtual Machines
+
+Docker or virtual machines are not required. The system can be executed directly in a local Python environment. They may be used for isolation or reproducibility, but are not necessary for the current prototype.
+
+### Storage, Privacy, and Ethical Considerations
+
+The prototype can persist player states, telemetry summaries, performance observations, and adaptation decisions through a local SQLite database. The storage requirements are small for the provided examples, typically requiring only a few megabytes of disk space. Larger experiments may require more storage depending on the number of players, sessions, generated candidates, and telemetry records.
+
+The repository does not include real player data. The provided examples use synthetic or manually defined telemetry for demonstration purposes. If the prototype is extended to collect data from human players, researchers and developers are responsible for obtaining appropriate consent, anonymizing or pseudonymizing player identifiers, protecting stored data, and complying with applicable ethical, institutional, and legal requirements.
+
+---
 ## Installation
 
 Create a virtual environment and install the package in editable mode:
